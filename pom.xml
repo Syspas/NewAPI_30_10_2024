@@ -75,7 +75,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.JiraApiClient.Main</mainClass> <!-- Указываем главный класс для запуска -->
+                            <mainClass>org.JiraApiClient.BasicTemplate.Main</mainClass> <!-- Указываем главный класс для запуска -->
                         </manifest>
                     </archive>
                 </configuration>

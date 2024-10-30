@@ -63,7 +63,7 @@ JairAPI
 
 2. **Запуск программы**:
     ```shell
-    java -cp build/libs/JairAPI.jar org.JiraApiClient.Main TEST-123
+    java -cp build/libs/JairAPI.jar org.JiraApiClient.BasicTemplate.Main TEST-123
     ```
 
    Здесь `TEST-123` — это ключ задачи Jira, данные которой будут извлечены и сохранены в файлы `TEST-123.txt` и `TEST-123_details.xml`.

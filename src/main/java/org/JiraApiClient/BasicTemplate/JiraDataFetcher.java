@@ -1,4 +1,4 @@
-package org.JiraApiClient;
+package org.JiraApiClient.BasicTemplate;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.domain.Issue;

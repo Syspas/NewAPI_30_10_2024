@@ -1,4 +1,4 @@
-package org.JiraApiClient;
+package org.JiraApiClient.BasicTemplate;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
