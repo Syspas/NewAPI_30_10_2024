@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.JiraApiClient</groupId>
+    <artifactId>NewAPI_30_10_2024</artifactId>
+    <version>1.0</version>
+
+    <!-- Указываем репозитории для загрузки зависимостей -->
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>atlassian-public</id>
+            <url>https://packages.atlassian.com/maven-public/</url>
+        </repository>
+        <repository>
+            <id>atlassian-external</id>
+            <url>https://repository.atlassian.com/maven-external/</url>
+        </repository>
+    </repositories>
+
+    <!-- Задаем версию Java -->
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source> <!-- Версия исходного кода Java -->
+        <maven.compiler.target>21</maven.compiler.target> <!-- Версия для целевой платформы -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- Кодировка для исходников -->
+        <file.encoding>UTF-8</file.encoding> <!-- Кодировка файла -->
+    </properties>
+
+    <!-- Добавляем зависимости для работы с Jira API -->
+    <dependencies>
+        <!-- Основной API клиент для Jira -->
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-rest-java-client-api</artifactId>
+            <version>5.2.7</version>
+        </dependency>
+        <!-- Ядро клиента для работы с Jira -->
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-rest-java-client-core</artifactId>
+            <version>5.2.7</version>
+        </dependency>
+        <!-- Поддержка функциональных коллекций Atlassian -->
+        <dependency>
+            <groupId>io.atlassian.fugue</groupId>
+            <artifactId>fugue</artifactId>
+            <version>4.7.2</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Настройки компиляции и кодировки -->
+    <build>
+        <plugins>
+            <!-- Плагин для настройки кодировки и создания JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- Плагин для создания исполняемого JAR с указанием главного класса -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.JiraApiClient.Main</mainClass> <!-- Указываем главный класс для запуска -->
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Плагин для указания кодировки при запуске и тестировании -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <file.encoding>${file.encoding}</file.encoding>
+                    </systemPropertyVariables>
+                    <argLine>-Dfile.encoding=${file.encoding}</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
