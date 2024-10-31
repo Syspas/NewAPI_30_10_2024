@@ -7,15 +7,16 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Base64;
 
 /**
  * Класс для загрузки XML-данных задачи из Jira.
  */
 public class XmlDownloader {
+    static String jiraUrl ;
+    static String jiraUsername;
+    static String jiraApiToken;
 
-    private final String jiraUrl;
-    private final String jiraUsername;
-    private final String jiraApiToken;
 
     /**
      * Конструктор инициализирует параметры для подключения.
@@ -31,7 +32,7 @@ public class XmlDownloader {
      *
      * @param issueKey Ключ задачи в Jira
      */
-    public void fetchIssueXml(String issueKey) {
+    public static void fetchIssueXml(String issueKey) {
         String xmlUrl = jiraUrl + "/si/jira.issueviews:issue-xml/" + issueKey + "/" + issueKey + ".xml";
 
         try {
@@ -40,7 +41,7 @@ public class XmlDownloader {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Authorization", "Basic " +
-                    java.util.Base64.getEncoder().encodeToString((jiraUsername + ":" + jiraApiToken).getBytes()));
+                    Base64.getEncoder().encodeToString((jiraUsername + ":" + jiraApiToken).getBytes()));
 
             if (connection.getResponseCode() == 200) {
                 StringBuilder xmlData = new StringBuilder();
@@ -63,4 +64,6 @@ public class XmlDownloader {
             e.printStackTrace();
         }
     }
+
+
 }

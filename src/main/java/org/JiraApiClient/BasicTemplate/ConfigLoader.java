@@ -14,7 +14,7 @@ public class ConfigLoader {
     /**
      * Конструктор загружает конфигурацию из файла.
      */
-    public ConfigLoader() {
+    public ConfigLoader(String s) {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
                 throw new FileNotFoundException("Файл конфигурации 'config.properties' не найден");

@@ -12,7 +12,7 @@ public class Main {
          String issueKey = "KAN-1"; // Задайте ключ задачи здесь
 
         // Создаем конфигурацию и клиент
-        ConfigLoader configLoader = new ConfigLoader();
+        ConfigLoader configLoader = new ConfigLoader("config.properties");
         JiraDataFetcher jiraDataFetcher = new JiraDataFetcher(configLoader);
 
         // Запрашиваем данные задачи
