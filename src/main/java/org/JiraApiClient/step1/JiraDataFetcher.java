@@ -26,6 +26,9 @@ public class JiraDataFetcher {
         this.jiraApiToken = configLoader.getProperty("jiraApiToken");
     }
 
+
+
+
     /**
      * Извлекает данные задачи по ее ключу и сохраняет их.
      *
