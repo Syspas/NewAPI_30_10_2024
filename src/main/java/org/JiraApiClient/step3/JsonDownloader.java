@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Base64;
+import java.util.Properties;
 
 public class JsonDownloader {
 
@@ -17,10 +19,40 @@ public class JsonDownloader {
     private final String jiraUsername;
     private final String jiraApiToken;
 
-    public JsonDownloader(String jiraUrl, String jiraUsername, String jiraApiToken) {
-        this.jiraUrl = jiraUrl;
-        this.jiraUsername = jiraUsername;
-        this.jiraApiToken = jiraApiToken;
+    public JsonDownloader(String configFilePath) {
+        // Загружаем параметры из файла config.properties
+        Properties properties = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream(configFilePath)) {
+            if (input == null) {
+                throw new IOException("Файл конфигурации не найден: " + configFilePath);
+            }
+            properties.load(input);
+        } catch (IOException e) {
+            System.err.println("Ошибка при загрузке конфигурации: " + e.getMessage());
+            throw new RuntimeException("Ошибка загрузки конфигурации", e);
+        }
+
+        this.jiraUrl = properties.getProperty("jira.url");
+        this.jiraUsername = properties.getProperty("jira.username");
+        this.jiraApiToken = properties.getProperty("jira.api.token");
+
+        // Проверка наличия параметров
+        if (jiraUrl == null || jiraUsername == null || jiraApiToken == null) {
+            System.out.println("Загруженные параметры конфигурации:");
+            System.out.println("jira.url: " + jiraUrl);
+            System.out.println("jira.username: " + jiraUsername);
+            System.out.println("jira.api.token: " + jiraApiToken);
+            throw new IllegalArgumentException("Параметры конфигурации не найдены. Проверьте файл конфигурации.");
+        }
+
+        // Проверка корректности URL
+        if (!jiraUrl.startsWith("http")) {
+            throw new IllegalArgumentException("Некорректный URL: " + jiraUrl);
+        }
+
+        // Вывод загруженных параметров для отладки
+        System.out.println("Загруженный URL: " + this.jiraUrl);
+        System.out.println("Загруженное имя пользователя: " + this.jiraUsername);
     }
 
     public void fetchIssueJson(String issueKey) {
@@ -32,6 +64,8 @@ public class JsonDownloader {
             URL url = uri.toURL();
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
+
+            // Установка заголовков аутентификации
             String auth = Base64.getEncoder().encodeToString((jiraUsername + ":" + jiraApiToken).getBytes());
             connection.setRequestProperty("Authorization", "Basic " + auth);
             connection.setRequestProperty("Accept", "application/json");
@@ -49,6 +83,7 @@ public class JsonDownloader {
                     }
                 }
 
+                // Парсинг JSON в объект JiraIssue
                 ObjectMapper objectMapper = new ObjectMapper();
                 JiraIssue issue = objectMapper.readValue(jsonData.toString(), JiraIssue.class);
                 System.out.println("Задача: " + issue.getKey());
