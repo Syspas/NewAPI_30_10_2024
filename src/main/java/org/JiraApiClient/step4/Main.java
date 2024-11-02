@@ -14,7 +14,7 @@ public class Main {
      */
     public static void main(String[] args) {
         String configFilePath = "config.properties"; // Имя файла конфигурации
-        String issueKey = "KAN-1"; // Замените на нужный ключ задачи
+        String issueKey = "KAN-3"; // Замените на нужный ключ задачи
 
         try {
             // Создание экземпляра JsonDownloader с указанным файлом конфигурации

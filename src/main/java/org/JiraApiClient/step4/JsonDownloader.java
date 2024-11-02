@@ -92,6 +92,9 @@ public class JsonDownloader {
             int responseCode = connection.getResponseCode();
             System.out.println("Запрашиваемый URL: " + jsonUrl);
             System.out.println("Код ответа: " + responseCode);
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 StringBuilder jsonData = new StringBuilder();
@@ -105,12 +108,20 @@ public class JsonDownloader {
                 // Парсинг JSON в объект JiraIssue
                 ObjectMapper objectMapper = new ObjectMapper();
                 JiraIssue issue = objectMapper.readValue(jsonData.toString(), JiraIssue.class);
+                System.out.println("-----------------------------------------------------");
+
+
                 System.out.println("Задача: " + issue.getKey());
                 System.out.println("Заголовок: " + issue.getFields().getSummary());
                 System.out.println("Описание: " + issue.getFields().getDescription());
 
                 String fileName = issueKey + "_details.json";
                 FileSaver.saveToFile(fileName, jsonData.toString());
+
+                System.out.println("");
+                System.out.println("");
+                System.out.println("");
+                System.out.println("-----------------------------------------------------");
                 System.out.println("JSON успешно получен и сохранен по пути: " + fileName);
             } else {
                 StringBuilder errorResponse = new StringBuilder();
