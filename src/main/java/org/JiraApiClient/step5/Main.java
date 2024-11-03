@@ -15,13 +15,12 @@ public class Main {
             // Вывод информации о задаче
             System.out.println("Ключ задачи: " + task.getKey());
             System.out.println("Название: " + task.getFields().getSummary()); // Изменено на getFields()
-            // Если вы хотите выводить дополнительные поля, раскомментируйте следующие строки:
-            // System.out.println("Описание: " + task.getFields().getDescription());
-            // System.out.println("Статус: " + task.getFields().getStatus().getName());
-            // System.out.println("Исполнитель: " + (task.getFields().getAssignee() != null ? task.getFields().getAssignee().getDisplayName() : "Не назначен"));
-            // System.out.println("Создатель задачи: " + (task.getFields().getCreator() != null ? task.getFields().getCreator().getDisplayName() : "Не указан"));
-            // System.out.println("Дата создания: " + task.getFields().getCreated());
-            // System.out.println("Дата обновления: " + task.getFields().getUpdated());
+            System.out.println("Описание: " + task.getFields().getDescription());
+            System.out.println("Статус: " + task.getFields().getStatus().getName());
+            System.out.println("Исполнитель: " + (task.getFields().getAssignee() != null ? task.getFields().getAssignee().getDisplayName() : "Не назначен"));
+            System.out.println("Создатель задачи: " + (task.getFields().getCreator() != null ? task.getFields().getCreator().getDisplayName() : "Не указан"));
+            System.out.println("Дата создания: " + task.getFields().getCreated());
+            System.out.println("Дата обновления: " + task.getFields().getUpdated());
         } catch (IOException e) {
             System.err.println("Ошибка при парсинге JSON: " + e.getMessage());
         }
